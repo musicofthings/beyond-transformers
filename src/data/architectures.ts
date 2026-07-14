@@ -201,7 +201,7 @@ export const architectures: Architecture[] = [
     id: "symbolic",
     n: "09",
     name: "Neuro-symbolic systems",
-    short: "Neuro↔Symbolic",
+    short: "Neuro-sym",
     color: "blue",
     tags: ["Compositional", "Auditable"],
     maturity: "Research",
@@ -291,9 +291,12 @@ export function filterArchitectures(
 
 /** Illustrative asymptotic scaling for the efficiency lab (not a hardware benchmark). */
 export function efficiencyMetrics(lengthK: number) {
-  const quadratic = Math.min(100, 18 + lengthK * 0.62);
-  const linear = Math.min(58, 14 + lengthK * 0.16);
-  const gap = Math.round(quadratic / linear);
-  const density = Math.max(3, Math.round(lengthK / 8));
+  // Log progress from 8K → 1024K (1M) so bars stay readable across orders of magnitude.
+  const t =
+    Math.log2(Math.max(8, lengthK) / 8) / Math.log2(1024 / 8); // 0..1
+  const quadratic = Math.min(100, 16 + t * 84);
+  const linear = Math.min(48, 12 + t * 28);
+  const gap = Math.max(1, Math.round(quadratic / Math.max(linear, 1)));
+  const density = Math.max(3, Math.round(3 + t * 29));
   return { quadratic, linear, gap, density };
 }

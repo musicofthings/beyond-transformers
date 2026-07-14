@@ -70,18 +70,27 @@ body {
 /* --- Theme bar --- */
 
 .themebar {
-  height: 44px;
+  min-height: 44px;
+  height: auto;
   background: #102238;
   color: #fff;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 8px 20px;
+  padding: 0 12px;
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   position: relative;
   z-index: 20;
+}
+
+.themebar > span {
+  flex-shrink: 0;
+  white-space: nowrap;
+  padding: 10px 0;
 }
 
 .theme-field .themebar {
@@ -94,7 +103,11 @@ body {
 
 .themechoices {
   display: flex;
-  height: 100%;
+  flex-wrap: wrap;
+  min-height: 44px;
+  flex: 1 1 auto;
+  justify-content: center;
+  max-width: 100%;
 }
 
 .themechoices button {
@@ -102,10 +115,12 @@ body {
   border-left: 1px solid #ffffff20;
   background: transparent;
   color: #bdc9d5;
-  padding: 0 22px;
+  padding: 0 16px;
+  min-height: 44px;
   cursor: pointer;
   font-size: 11px;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
 .themechoices button:last-child {
@@ -126,12 +141,13 @@ body {
 /* --- Header / nav --- */
 
 header {
-  height: 76px;
+  min-height: 76px;
+  height: auto;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: 32px;
-  padding: 0 3%;
+  gap: 16px 24px;
+  padding: 12px 3%;
   border-bottom: 1px solid var(--line);
   position: sticky;
   top: 0;
@@ -143,9 +159,13 @@ header {
 .brand {
   font-size: 13px;
   font-weight: 800;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.14em;
   color: var(--ink);
   text-decoration: none;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .brand b {
@@ -154,7 +174,10 @@ header {
 
 .nav-desktop {
   display: flex;
-  gap: 38px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 28px;
+  min-width: 0;
 }
 
 .nav-desktop a,
@@ -162,6 +185,7 @@ header {
   color: var(--ink);
   text-decoration: none;
   font-size: 14px;
+  white-space: nowrap;
 }
 
 .nav-desktop a:hover {
@@ -173,20 +197,22 @@ header {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .outline {
   text-decoration: none;
   color: var(--primary);
   border: 1px solid var(--primary);
-  padding: 13px 18px;
+  padding: 11px 14px;
   font-size: 13px;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .outline span,
 .primary span {
-  margin-left: 18px;
+  margin-left: 12px;
 }
 
 .menu-toggle {
@@ -199,6 +225,7 @@ header {
   cursor: pointer;
   font-size: 20px;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 .nav-mobile {
@@ -210,13 +237,15 @@ header {
 .hero {
   min-height: 710px;
   display: grid;
-  grid-template-columns: 43% 57%;
+  grid-template-columns: minmax(0, 43%) minmax(0, 57%);
   border-bottom: 1px solid var(--line);
   overflow: hidden;
 }
 
 .hero-copy {
   padding: 72px 4vw 44px;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .eyebrow,
@@ -224,30 +253,33 @@ header {
   font-size: 11px;
   font-weight: 800;
   color: var(--primary);
-  letter-spacing: 0.17em;
-  margin: 0 0 23px;
+  letter-spacing: 0.14em;
+  margin: 0 0 20px;
+  overflow-wrap: anywhere;
 }
 
 .hero h1 {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(55px, 5.6vw, 94px);
+  font-size: clamp(40px, 4.8vw, 78px);
   font-weight: 400;
-  line-height: 0.95;
-  letter-spacing: -0.055em;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
   margin: 0;
-  max-width: 730px;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .theme-field .hero h1 {
-  font-size: clamp(56px, 6.2vw, 105px);
-  line-height: 0.87;
+  font-size: clamp(42px, 5.2vw, 84px);
+  line-height: 1.02;
   text-transform: uppercase;
 }
 
 .theme-lab .hero h1 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 800;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.045em;
   color: #102b69;
 }
 
@@ -261,15 +293,17 @@ header {
 
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 35px;
+  gap: 18px 28px;
 }
 
 .hero-actions .primary {
   background: var(--primary);
   color: white;
-  padding: 19px 24px;
+  padding: 16px 20px;
   font-weight: 700;
+  display: inline-block;
 }
 
 .truth {
@@ -290,6 +324,7 @@ header {
 .hero-viz {
   position: relative;
   min-height: 650px;
+  min-width: 0;
   background-image: radial-gradient(var(--line) 0.7px, transparent 0.8px);
   background-size: 15px 15px;
 }
@@ -345,13 +380,16 @@ header {
   position: absolute;
   width: 120px;
   min-height: 104px;
+  max-width: calc(100% - 12px);
   background: var(--panel);
   border: 1px solid var(--accent);
   color: var(--ink);
   padding: 8px;
   z-index: 4;
   cursor: pointer;
-  transition: 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .orbit:hover,
@@ -361,6 +399,7 @@ header {
   box-shadow: 0 8px 20px #16304a14;
   border-width: 2px;
   border-color: var(--primary);
+  z-index: 6;
 }
 
 .orbit svg,
@@ -392,25 +431,37 @@ header {
 .orbit b {
   display: block;
   font-family: Georgia, serif;
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.orbit small {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .theme-field .orbit b {
   font-family: Arial, sans-serif;
   text-transform: uppercase;
   font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.02em;
 }
 
 /* Nine family positions around the transformer reference */
-.orbit-0 { left: 38%; top: 2%; }
-.orbit-1 { right: 6%; top: 10%; }
-.orbit-2 { right: 1%; top: 38%; }
-.orbit-3 { right: 8%; bottom: 8%; }
-.orbit-4 { left: 42%; bottom: 1%; }
-.orbit-5 { left: 4%; bottom: 10%; }
-.orbit-6 { left: 1%; top: 36%; }
-.orbit-7 { left: 8%; top: 8%; }
-.orbit-8 { left: 22%; top: 22%; }
+.orbit-0 { left: 36%; top: 2%; }
+.orbit-1 { right: 4%; top: 8%; }
+.orbit-2 { right: 1%; top: 36%; }
+.orbit-3 { right: 6%; bottom: 10%; }
+.orbit-4 { left: 40%; bottom: 2%; }
+.orbit-5 { left: 3%; bottom: 12%; }
+.orbit-6 { left: 1%; top: 34%; }
+.orbit-7 { left: 6%; top: 6%; }
+.orbit-8 { left: 18%; top: 20%; }
 
 .routes {
   position: absolute;
@@ -429,24 +480,33 @@ header {
 
 .selected-note {
   position: absolute;
-  z-index: 5;
+  z-index: 7;
   right: 3%;
   bottom: 2%;
-  width: 250px;
+  width: min(250px, 46%);
+  max-width: calc(100% - 16px);
   padding: 12px;
   background: var(--panel);
   border-left: 3px solid var(--primary);
   font-size: 11px;
+  line-height: 1.4;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  overflow-wrap: anywhere;
+  box-shadow: 0 4px 16px #0d203514;
 }
 
 .selected-note span {
   color: var(--primary);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   font-weight: 800;
+}
+
+.selected-note b {
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .theme-field .hero-viz {
@@ -478,13 +538,21 @@ header {
 .sources {
   padding: 90px 4vw;
   border-bottom: 1px solid var(--line);
+  /* Keep section titles clear of the sticky header on in-page jumps */
+  scroll-margin-top: 96px;
 }
 
 .why {
   display: grid;
-  grid-template-columns: 32% 68%;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.85fr);
+  gap: 40px 48px;
+  align-items: start;
   background: var(--ink);
   color: var(--bg);
+}
+
+.why > div:first-child {
+  min-width: 0;
 }
 
 .why .kicker {
@@ -493,15 +561,19 @@ header {
 
 h2 {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(38px, 4vw, 66px);
-  line-height: 1;
-  letter-spacing: -0.04em;
+  font-size: clamp(30px, 3.4vw, 52px);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
   font-weight: 400;
   margin: 0;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 .theme-field h2 {
   text-transform: uppercase;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
 }
 
 .theme-lab h2 {
@@ -511,13 +583,15 @@ h2 {
 
 .why-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 35px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 32px;
+  min-width: 0;
 }
 
 .why-grid article {
   border-top: 1px solid #ffffff45;
   padding-top: 14px;
+  min-width: 0;
 }
 
 .why-grid b {
@@ -527,7 +601,9 @@ h2 {
 
 .why-grid h3 {
   font-size: 19px;
+  line-height: 1.25;
   margin: 18px 0 8px;
+  overflow-wrap: break-word;
 }
 
 .why-grid p {
@@ -538,10 +614,14 @@ h2 {
 
 .section-head {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   align-items: end;
-  gap: 60px;
+  gap: 28px 40px;
   margin-bottom: 48px;
+}
+
+.section-head > div {
+  min-width: 0;
 }
 
 .section-head > p {
@@ -549,23 +629,27 @@ h2 {
   font-size: 15px;
   line-height: 1.6;
   margin: 0;
+  min-width: 0;
+  max-width: 42ch;
 }
 
 /* --- Atlas cards --- */
 
 .filters {
   display: flex;
+  flex-wrap: wrap;
   border-bottom: 1px solid var(--line);
   margin-bottom: 22px;
-  gap: 5px;
+  gap: 4px 5px;
 }
 
 .filters button {
   border: 0;
   background: transparent;
   color: var(--muted);
-  padding: 13px 18px;
+  padding: 13px 16px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .filters button.on,
@@ -581,18 +665,22 @@ h2 {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
 .arch-card {
   background: var(--panel);
   border: 1px solid var(--line);
-  padding: 22px;
+  padding: 22px 22px 64px;
   min-height: 460px;
   position: relative;
-  transition: 0.2s;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .theme-field .arch-card {
@@ -634,8 +722,10 @@ h2 {
 }
 
 .arch-card h3 {
-  font-size: 23px;
+  font-size: clamp(18px, 1.6vw, 23px);
+  line-height: 1.2;
   margin: 20px 0 4px;
+  overflow-wrap: break-word;
 }
 
 .glyph {
@@ -670,18 +760,22 @@ h2 {
   line-height: 1.5;
   color: var(--muted);
   min-height: 63px;
+  overflow-wrap: break-word;
 }
 
 .arch-card dl {
   border-top: 1px dotted var(--line);
   margin: 10px 0 0;
   padding-top: 10px;
+  flex: 1 1 auto;
 }
 
 .arch-card dl div {
   display: grid;
-  grid-template-columns: 70px 1fr;
+  grid-template-columns: 70px minmax(0, 1fr);
+  gap: 8px;
   font-size: 11px;
+  line-height: 1.4;
   margin: 8px 0;
 }
 
@@ -691,20 +785,34 @@ h2 {
 
 .arch-card dd {
   margin: 0;
+  overflow-wrap: break-word;
 }
 
 .arch-card > a {
   position: absolute;
-  bottom: 18px;
-  left: 22px;
-  right: 22px;
+  bottom: 0;
+  left: 0;
+  right: 0;
   border-top: 1px solid var(--line);
-  padding-top: 11px;
+  padding: 12px 22px;
   text-decoration: none;
   color: var(--ink);
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
   font-size: 10px;
+  line-height: 1.35;
+  background: var(--panel);
+}
+
+.arch-card > a > span:first-child {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+.arch-card > a > b {
+  flex-shrink: 0;
 }
 
 /* --- Efficiency lab --- */
@@ -715,23 +823,29 @@ h2 {
 
 .lab-grid {
   display: grid;
-  grid-template-columns: 1fr 130px;
+  grid-template-columns: minmax(0, 1fr) minmax(120px, 140px);
   gap: 20px;
+  align-items: stretch;
 }
 
 .scaler {
   grid-column: 1 / -1;
   border: 1px solid var(--line);
   padding: 20px 25px;
+  min-width: 0;
 }
 
 .scale-top {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .scale-top b {
   color: var(--primary);
+  white-space: nowrap;
 }
 
 input[type="range"] {
@@ -751,15 +865,17 @@ input[type="range"] {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  min-width: 0;
 }
 
 .flow {
   border: 1px solid var(--line);
   padding: 20px;
   display: grid;
-  grid-template-columns: 210px 1fr 240px;
-  gap: 25px;
+  grid-template-columns: minmax(140px, 200px) minmax(0, 1fr) minmax(140px, 220px);
+  gap: 18px 20px;
   align-items: center;
+  min-width: 0;
 }
 
 .theme-lab .flow {
@@ -770,6 +886,7 @@ input[type="range"] {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
 }
 
 .flow-label > i {
@@ -780,6 +897,7 @@ input[type="range"] {
   border-radius: 50%;
   width: 52px;
   height: 52px;
+  flex-shrink: 0;
   display: grid;
   place-items: center;
 }
@@ -787,11 +905,18 @@ input[type="range"] {
 .flow-label span {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+}
+
+.flow-label b {
+  line-height: 1.25;
+  overflow-wrap: break-word;
 }
 
 .flow-label small {
   color: var(--muted);
   margin-top: 5px;
+  line-height: 1.3;
 }
 
 .matrix-mini {
@@ -818,26 +943,31 @@ input[type="range"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 18px;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  min-width: 0;
 }
 
 .states i {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border: 1px solid var(--primary);
   border-radius: 12px;
   display: grid;
   place-items: center;
   font-family: Georgia, serif;
   font-style: normal;
+  flex-shrink: 0;
 }
 
 .states i:not(:last-child)::after {
   content: "→";
   position: absolute;
-  margin-left: 66px;
+  left: calc(100% + 2px);
   color: var(--primary);
+  font-size: 12px;
+  line-height: 1;
 }
 
 .meter {
@@ -845,11 +975,13 @@ input[type="range"] {
   border: 1px solid var(--line);
   border-radius: 10px;
   position: relative;
+  min-width: 0;
 }
 
 .meter b {
   height: 100%;
   display: block;
+  max-width: 100%;
   border-radius: 10px;
   background: var(--accent);
   transition: width 0.3s;
@@ -864,6 +996,7 @@ input[type="range"] {
   color: var(--muted);
   display: block;
   margin-top: 5px;
+  white-space: nowrap;
 }
 
 .lab-note {
@@ -874,15 +1007,21 @@ input[type="range"] {
   justify-content: center;
   text-align: center;
   color: var(--primary);
+  padding: 16px 12px;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .lab-note strong {
   font-family: Georgia, serif;
-  font-size: 48px;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.1;
 }
 
 .lab-note span {
   font-size: 11px;
+  line-height: 1.4;
+  margin-top: 6px;
 }
 
 /* --- Compare table --- */
@@ -903,19 +1042,26 @@ th,
 td {
   text-align: left;
   border-bottom: 1px solid var(--line);
-  padding: 16px 18px;
+  padding: 14px 16px;
   font-size: 12px;
+  line-height: 1.4;
+  vertical-align: top;
+  overflow-wrap: break-word;
 }
 
 thead th {
   font-size: 9px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--muted);
+  white-space: normal;
+  line-height: 1.35;
 }
 
 tbody th {
   font-size: 13px;
+  line-height: 1.3;
+  max-width: 16ch;
 }
 
 .table-note {
@@ -998,19 +1144,25 @@ mark {
 }
 
 .future h2 {
-  max-width: 950px;
+  max-width: min(950px, 100%);
 }
 
 .future-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px 30px;
   margin-top: 55px;
 }
 
 .future-grid article {
   border-top: 1px solid #ffffff70;
   padding-top: 17px;
+  min-width: 0;
+}
+
+.future-grid h3 {
+  line-height: 1.25;
+  overflow-wrap: break-word;
 }
 
 .future-grid b {
@@ -1024,19 +1176,21 @@ mark {
 
 .source-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   border-top: 1px solid var(--line);
 }
 
 .source-list a {
   display: grid;
-  grid-template-columns: 35px 1fr auto;
+  grid-template-columns: 35px minmax(0, 1fr) auto;
   gap: 12px;
   color: var(--ink);
   text-decoration: none;
   padding: 18px 12px;
   border-bottom: 1px solid var(--line);
   position: relative;
+  min-width: 0;
+  align-items: start;
 }
 
 .source-list a:nth-child(odd) {
@@ -1051,35 +1205,52 @@ mark {
 .source-list span {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+}
+
+.source-list strong {
+  line-height: 1.3;
+  overflow-wrap: break-word;
 }
 
 .source-list small {
   color: var(--muted);
   margin-top: 5px;
+  line-height: 1.4;
+  overflow-wrap: break-word;
 }
 
 .source-list i {
   font-style: normal;
   color: var(--primary);
+  flex-shrink: 0;
 }
 
 footer {
   padding: 45px 4vw;
   display: grid;
-  grid-template-columns: 1fr 2fr auto;
-  gap: 40px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto;
+  gap: 24px 40px;
   align-items: center;
+}
+
+footer .brand {
+  min-width: 0;
 }
 
 footer p {
   font-size: 12px;
   color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+  min-width: 0;
 }
 
 footer a {
   color: var(--primary);
   text-decoration: none;
   font-size: 12px;
+  white-space: nowrap;
 }
 
 .back-to-top {
@@ -1123,20 +1294,72 @@ footer a {
 
 /* --- Responsive --- */
 
+/* Mid desktop: prevent brand/nav/CTA collision before hamburger kicks in */
+@media (max-width: 1200px) {
+  header {
+    gap: 12px 16px;
+  }
+
+  .nav-desktop {
+    gap: 10px 18px;
+  }
+
+  .outline {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+
+  .outline span {
+    margin-left: 8px;
+  }
+
+  .brand {
+    letter-spacing: 0.1em;
+    font-size: 12px;
+  }
+
+  .flow {
+    grid-template-columns: minmax(130px, 180px) minmax(0, 1fr);
+  }
+
+  .flow .meter {
+    grid-column: 1 / -1;
+  }
+
+  .lab-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(110px, 130px);
+  }
+}
+
 @media (max-width: 1100px) {
   .orbit {
-    width: 104px;
-    min-height: 92px;
+    width: 100px;
+    min-height: 90px;
+    padding: 6px;
   }
 
   .orbit b {
-    font-size: 12px;
+    font-size: 11px;
+  }
+
+  .orbit svg {
+    width: 60px;
+    height: 32px;
+  }
+
+  .theme-field .orbit b {
+    font-size: 10px;
+  }
+
+  h2 {
+    font-size: clamp(28px, 3.8vw, 44px);
   }
 }
 
 @media (max-width: 1000px) {
   header {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 10px 4%;
   }
 
   .nav-desktop {
@@ -1164,6 +1387,7 @@ footer a {
     border-bottom: 1px solid var(--line);
     box-shadow: 0 12px 30px #0d20351a;
     padding: 8px 0;
+    z-index: 20;
   }
 
   .nav-mobile[hidden] {
@@ -1192,29 +1416,31 @@ footer a {
     grid-template-columns: 1fr;
   }
 
+  .hero-copy {
+    padding: 56px 5vw 36px;
+  }
+
   .hero-viz {
     min-height: 600px;
   }
 
   .why {
     grid-template-columns: 1fr;
-    gap: 50px;
+    gap: 40px;
   }
 
   .cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .flow {
-    grid-template-columns: 180px 1fr;
-  }
-
-  .flow .meter {
-    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .section-head {
     grid-template-columns: 1fr;
+    align-items: start;
+    gap: 16px 24px;
+  }
+
+  .section-head > p {
+    max-width: 60ch;
   }
 
   .source-list {
@@ -1224,74 +1450,124 @@ footer a {
   .source-list a:nth-child(odd) {
     border-right: 0;
   }
+
+  .future-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .themechoices button {
+    padding: 0 12px;
+    font-size: 10px;
+  }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 780px) {
   .themebar {
-    height: auto;
     flex-direction: column;
-    gap: 4px;
-    padding-top: 8px;
+    gap: 0;
+    padding: 6px 0 0;
+  }
+
+  .themebar > span {
+    padding: 6px 12px 2px;
+    letter-spacing: 0.1em;
   }
 
   .themechoices {
     width: 100%;
+    min-height: 0;
   }
 
   .themechoices button {
-    padding: 10px 5px;
-    flex: 1;
+    flex: 1 1 0;
+    padding: 10px 6px;
     font-size: 9px;
+    letter-spacing: 0.02em;
+    min-height: 40px;
+    border-top: 1px solid #ffffff20;
   }
 
+  .themechoices button:last-child {
+    border-right: 0;
+  }
+
+  .themechoices i {
+    margin-right: 4px;
+  }
+}
+
+@media (max-width: 680px) {
   header {
-    height: 62px;
-    padding: 0 18px;
+    min-height: 56px;
+    padding: 8px 16px;
+  }
+
+  .brand {
+    letter-spacing: 0.08em;
+    font-size: 11px;
   }
 
   .hero-copy {
-    padding: 50px 20px;
+    padding: 40px 18px 28px;
   }
 
   .hero h1,
   .theme-field .hero h1 {
-    font-size: 49px;
+    font-size: clamp(32px, 9vw, 42px);
+    line-height: 1.1;
+  }
+
+  .eyebrow,
+  .kicker {
+    letter-spacing: 0.1em;
+  }
+
+  .dek {
+    font-size: 16px;
   }
 
   .hero-actions {
     align-items: flex-start;
     flex-direction: column;
+    gap: 14px;
   }
 
   .hero-viz {
-    min-height: 720px;
+    min-height: 680px;
   }
 
   .orbit {
-    width: 96px;
-    min-height: 88px;
+    width: 88px;
+    min-height: 82px;
+    padding: 5px;
   }
 
   .orbit svg {
-    width: 56px;
-    height: 30px;
+    width: 52px;
+    height: 28px;
   }
 
   .orbit b {
-    font-size: 11px;
+    font-size: 10px;
   }
 
   .orbit small {
-    font-size: 7px;
+    font-size: 6px;
+    letter-spacing: 0.08em;
   }
 
   .reference {
-    width: 120px;
-    height: 120px;
+    width: 112px;
+    height: 112px;
+  }
+
+  .reference strong {
+    font-size: 15px;
   }
 
   .selected-note {
-    width: min(200px, 46vw);
+    width: min(220px, 52vw);
+    font-size: 10px;
   }
 
   .why,
@@ -1301,7 +1577,13 @@ footer a {
   .timeline,
   .future,
   .sources {
-    padding: 65px 20px;
+    padding: 56px 18px;
+    scroll-margin-top: 72px;
+  }
+
+  h2 {
+    font-size: clamp(26px, 7.5vw, 34px);
+    line-height: 1.18;
   }
 
   .why-grid,
@@ -1311,15 +1593,20 @@ footer a {
   }
 
   .section-head {
-    gap: 20px;
+    gap: 14px;
+    margin-bottom: 32px;
   }
 
   .filters {
-    overflow: auto;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
   }
 
   .filters button {
     white-space: nowrap;
+    padding: 12px 14px;
   }
 
   .lab-grid {
@@ -1331,31 +1618,77 @@ footer a {
   }
 
   .lab-note {
-    min-height: 130px;
+    min-height: 120px;
   }
 
   .flow {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .flow .meter {
     grid-column: auto;
   }
 
+  .states {
+    gap: 8px 12px;
+  }
+
+  .states i {
+    width: 40px;
+    height: 40px;
+  }
+
+  .arch-card {
+    min-height: 0;
+    padding-bottom: 60px;
+  }
+
+  .timeline-track > div {
+    min-width: 120px;
+  }
+
   footer {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  footer a {
+    justify-self: start;
   }
 
   .source-list a {
     padding-left: 0;
     padding-right: 0;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
   }
 
   .back-to-top {
-    right: 16px;
-    bottom: 16px;
+    right: 14px;
+    bottom: 14px;
     width: 46px;
     height: 46px;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  .themechoices button {
+    font-size: 8px;
+    padding: 8px 3px;
+  }
+
+  .themechoices i {
+    display: none;
+  }
+
+  .orbit {
+    width: 78px;
+    min-height: 74px;
+  }
+
+  .orbit-8 {
+    display: none; /* avoid pile-up on the tightest widths */
   }
 }
 

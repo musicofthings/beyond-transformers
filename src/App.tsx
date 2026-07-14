@@ -52,6 +52,12 @@ function heroTitle(theme: Theme) {
   return <>The future of intelligence is bigger than one architecture.</>;
 }
 
+/** Display sequence length (stored as thousands of tokens). */
+function formatContextLength(lengthK: number) {
+  if (lengthK >= 1024) return "1M tokens";
+  return `${lengthK}K tokens`;
+}
+
 export default function App() {
   const [theme, setTheme] = usePersistedTheme();
   const [active, setActive] = useState<FilterMode>("all");
@@ -342,22 +348,22 @@ export default function App() {
           <div className="scaler">
             <div className="scale-top">
               <span>Sequence length</span>
-              <b>{length}K tokens</b>
+              <b>{formatContextLength(length)}</b>
             </div>
             <input
               aria-label="Sequence length in thousands of tokens"
               type="range"
               min={8}
-              max={128}
+              max={1024}
               step={8}
               value={length}
               onChange={(e) => setLength(Number(e.target.value))}
             />
             <div className="ticks">
               <span>8K</span>
-              <span>32K</span>
-              <span>64K</span>
               <span>128K</span>
+              <span>512K</span>
+              <span>1M</span>
             </div>
           </div>
 
@@ -416,7 +422,7 @@ export default function App() {
             <span>
               relative scaling gap
               <br />
-              <small>illustrative at {length}K</small>
+              <small>illustrative at {formatContextLength(length)}</small>
             </span>
           </div>
         </div>
