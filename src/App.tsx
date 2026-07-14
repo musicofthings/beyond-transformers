@@ -4,8 +4,12 @@ import {
   architectures,
   efficiencyMetrics,
   filterArchitectures,
+  padCount,
   sources,
+  tierCount,
+  TIER_META,
   timeline,
+  type ArchTier,
   type FilterMode,
   type Theme,
 } from "./data/architectures";
@@ -24,10 +28,11 @@ const NAV_LINKS = [
   { href: "#timeline", label: "Timeline" },
 ] as const;
 
-const FILTERS: { id: FilterMode; label: string; count: string }[] = [
-  { id: "all", label: "All families", count: "09" },
-  { id: "backbone", label: "Backbone alternatives", count: "08" },
-  { id: "complement", label: "Complementary", count: "01" },
+const FILTERS: { id: FilterMode; label: string }[] = [
+  { id: "all", label: "All families" },
+  { id: "A", label: "Tier A · Production" },
+  { id: "B", label: "Tier B · Research" },
+  { id: "C", label: "Tier C · Emerging" },
 ];
 
 function heroTitle(theme: Theme) {
@@ -163,8 +168,11 @@ export default function App() {
             </a>
           </div>
           <div className="truth">
-            <b>The honest takeaway</b>
-            <span>There is no universal winner. The likely future is hybrid.</span>
+            <b>The honest takeaway · July 2026</b>
+            <span>
+              No universal winner. Production SOTA is efficient attention + MoE +
+              hybrids; pure replacements remain strong research bets.
+            </span>
           </div>
         </div>
 
@@ -200,7 +208,7 @@ export default function App() {
             aria-hidden="true"
             focusable="false"
           >
-            <path d="M340 260C250 200 190 100 110 74M340 260C430 180 505 74 575 80M340 260C455 245 560 220 620 230M340 260C440 330 520 400 590 430M340 260C300 360 240 440 150 448M340 260C245 285 150 310 70 300M340 260C200 220 120 180 55 160M340 260C390 400 450 470 510 500M340 260C280 120 200 60 140 30" />
+            <path d="M340 260C250 200 190 100 110 74M340 260C430 180 505 74 575 80M340 260C455 245 560 220 620 230M340 260C440 330 520 400 590 430M340 260C300 360 240 440 150 448M340 260C245 285 150 310 70 300M340 260C200 220 120 180 55 160M340 260C390 400 450 470 510 500M340 260C280 120 200 60 140 30M340 260C360 140 400 90 460 70M340 260C300 300 260 340 220 380M340 260C400 300 470 340 540 360" />
           </svg>
 
           <div className="selected-note" aria-live="polite">
@@ -254,27 +262,44 @@ export default function App() {
       <section className="architecture-section" id="atlas">
         <div className="section-head">
           <div>
-            <p className="kicker">THE ARCHITECTURE ATLAS</p>
-            <h2>Nine paths beyond full attention</h2>
+            <p className="kicker">THE ARCHITECTURE ATLAS · JULY 2026</p>
+            <h2>Twelve families, three tiers of SOTA gravity</h2>
           </div>
           <p>
-            Some replace the backbone. Others complement it. Select a card to
-            see what each design gains—and gives up.
+            Transformers did not vanish—they were compressed, sparsified,
+            hybridized, and paired with more inference-time compute. Tier A is
+            what ships; B is strong research; C is still emerging.
           </p>
         </div>
 
-        <div className="filters" role="group" aria-label="Filter architecture families">
-          {FILTERS.map((f) => (
-            <button
-              key={f.id}
-              type="button"
-              className={active === f.id ? "on" : ""}
-              aria-pressed={active === f.id}
-              onClick={() => setActive(f.id)}
-            >
-              {f.label} <b>{f.count}</b>
-            </button>
+        <div className="tier-legend" aria-label="SOTA tier guide">
+          {(["A", "B", "C"] as ArchTier[]).map((tier) => (
+            <div key={tier} className={`tier-legend-item tier-${tier}`}>
+              <b>Tier {tier}</b>
+              <span>{TIER_META[tier].label}</span>
+              <small>{TIER_META[tier].blurb}</small>
+            </div>
           ))}
+        </div>
+
+        <div className="filters" role="group" aria-label="Filter architecture families">
+          {FILTERS.map((f) => {
+            const count =
+              f.id === "all"
+                ? tierCount(architectures, "all")
+                : tierCount(architectures, f.id);
+            return (
+              <button
+                key={f.id}
+                type="button"
+                className={active === f.id ? "on" : ""}
+                aria-pressed={active === f.id}
+                onClick={() => setActive(f.id)}
+              >
+                {f.label} <b>{padCount(count)}</b>
+              </button>
+            );
+          })}
         </div>
 
         <div className="cards">
@@ -282,7 +307,7 @@ export default function App() {
             <article
               key={a.id}
               id={`arch-${a.id}`}
-              className={`arch-card ${a.color} ${selected === a.id ? "selected" : ""}`}
+              className={`arch-card ${a.color} tier-${a.tier} ${selected === a.id ? "selected" : ""}`}
               tabIndex={0}
               aria-current={selected === a.id ? "true" : undefined}
               onClick={() => setSelected(a.id)}
@@ -295,7 +320,10 @@ export default function App() {
             >
               <div className="card-top">
                 <span>{a.n}</span>
-                <em>{a.maturity}</em>
+                <div className="card-badges">
+                  <em className={`tier-pill tier-${a.tier}`}>Tier {a.tier}</em>
+                  <em>{a.maturity}</em>
+                </div>
               </div>
               <h3>{a.name}</h3>
               <div className="glyph">
@@ -305,6 +333,7 @@ export default function App() {
                 {a.tags.map((t) => (
                   <b key={t}>{t}</b>
                 ))}
+                {a.complement ? <b className="chip-complement">Complement</b> : null}
               </div>
               <p>{a.idea}</p>
               <dl>
@@ -437,18 +466,20 @@ export default function App() {
           <p>
             Big-O notation describes growth, not real-world speed. Hardware
             utilization, kernels, batch size, model quality, and sequence length
-            still decide the winner. Values are architecture-level tendencies.
+            still decide the winner. Values are architecture-level tendencies
+            for July 2026.
           </p>
         </div>
         <div className="table-wrap">
           <table>
             <caption className="sr-only">
-              Comparison of sequence compute, decode state, parallel training,
-              token recall, and maturity across architectures
+              Comparison of tier, sequence compute, decode state, parallel
+              training, token recall, and maturity across architectures
             </caption>
             <thead>
               <tr>
                 <th scope="col">Architecture</th>
+                <th scope="col">Tier</th>
                 <th scope="col">Sequence compute</th>
                 <th scope="col">Decode state</th>
                 <th scope="col">Parallel training</th>
@@ -458,7 +489,10 @@ export default function App() {
             </thead>
             <tbody>
               <tr>
-                <th scope="row">Transformer</th>
+                <th scope="row">Transformer (full attention)</th>
+                <td>
+                  <mark className="good">A</mark>
+                </td>
                 <td>
                   <mark className="bad">O(n²)</mark>
                 </td>
@@ -466,7 +500,7 @@ export default function App() {
                 <td>Excellent</td>
                 <td>Strong</td>
                 <td>
-                  <mark className="good">Dominant</mark>
+                  <mark className="good">Dominant base</mark>
                 </td>
               </tr>
               {architectures.map((a) => (
@@ -477,6 +511,11 @@ export default function App() {
                       <span className="table-note"> (complement)</span>
                     ) : null}
                   </th>
+                  <td>
+                    <mark className={a.tier === "A" ? "good" : undefined}>
+                      {a.tier}
+                    </mark>
+                  </td>
                   <td>
                     <mark className="good">{a.complexity}</mark>
                   </td>
@@ -530,30 +569,30 @@ export default function App() {
 
       <section className="future">
         <p className="kicker">WHAT TO WATCH</p>
-        <h2>The post-transformer era may still contain transformers.</h2>
+        <h2>The post-transformer era still contains transformers.</h2>
         <div className="future-grid">
           <article>
             <b>01</b>
             <h3>Hybrid backbones</h3>
             <p>
-              Small attention layers mixed with SSMs, recurrence, convolutions,
-              or local windows.
+              SSM + attention + MoE stacks (Jamba, Bamba, Nemotron-H, Samba) as
+              the default long-context production path.
             </p>
           </article>
           <article>
             <b>02</b>
-            <h3>Inference-first design</h3>
+            <h3>Compressed attention + sparse capacity</h3>
             <p>
-              Architectures optimized for memory bandwidth, continuous batching,
-              and on-device state.
+              MLA, GQA, windowed attention, and expert routing keeping the
+              transformer lineage competitive at frontier scale.
             </p>
           </article>
           <article>
             <b>03</b>
-            <h3>Hardware–model co-design</h3>
+            <h3>Test-time compute</h3>
             <p>
-              Neuromorphic chips, analog compute, and custom kernels changing
-              what “efficient” means.
+              More FLOPs at inference—search, verifiers, and longer traces—often
+              matter as much as a new layer algebra.
             </p>
           </article>
         </div>

@@ -75,6 +75,32 @@ export function Glyph({ type }: GlyphProps) {
       </svg>
     );
   }
+  if (type === "compress") {
+    return (
+      <svg {...common}>
+        <path d="M18 14h84v44H18zM18 28h84M18 44h84M42 14v44M78 14v44" />
+        <path className="accent" d="M30 36h20l-8-8M50 36l-8 8M90 36H70l8-8M70 36l8 8" />
+      </svg>
+    );
+  }
+  if (type === "hybrid") {
+    return (
+      <svg {...common}>
+        <path d="M10 48c10-28 18 18 28-4s16 16 28-6 16 14 34-8" />
+        <path d="M68 18h34v36H68zM79 18v36M90 18v36M68 30h34M68 42h34" />
+        <path className="accent" d="M52 36h16M52 36l-5-5M52 36l-5 5" />
+      </svg>
+    );
+  }
+  if (type === "think") {
+    return (
+      <svg {...common}>
+        <circle cx="48" cy="30" r="18" />
+        <path d="M38 44l-8 16h20l-4-10" />
+        <path className="accent" d="M78 18v8M78 34v2M90 26h8M58 26H50M86 14l5 5M86 38l5-5M70 14l-5 5M70 38l-5-5" />
+      </svg>
+    );
+  }
   // wave / filter default
   return (
     <svg {...common}>

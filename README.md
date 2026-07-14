@@ -35,13 +35,21 @@ The Vite `base` path is relative (`./`), so the site works for project Pages und
 ```
 src/
   App.tsx                 # Page composition and interaction
-  data/architectures.ts   # Typed architecture catalog and helpers
+  data/architectures.ts   # July 2026 SOTA catalog (Tier A/B/C)
   components/Glyph.tsx    # Decorative architecture icons
   hooks/usePersistedTheme.ts
   styles.css
 public/
   favicon.svg
 ```
+
+## Architecture tiers (July 2026)
+
+| Tier | Meaning | Families |
+|------|---------|----------|
+| **A** | Production / near-production | Efficient attention (MLA/GQA), MoE, SSM, Hybrid SSM–Transformer, modern recurrence |
+| **B** | Strong research | Linear attention, RetNet, long convolutions |
+| **C** | Emerging / orthogonal | Liquid, spiking, neuro-symbolic, test-time compute |
 
 ## Notes
 

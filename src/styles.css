@@ -452,16 +452,19 @@ header {
   letter-spacing: 0.02em;
 }
 
-/* Nine family positions around the transformer reference */
-.orbit-0 { left: 36%; top: 2%; }
-.orbit-1 { right: 4%; top: 8%; }
-.orbit-2 { right: 1%; top: 36%; }
-.orbit-3 { right: 6%; bottom: 10%; }
-.orbit-4 { left: 40%; bottom: 2%; }
-.orbit-5 { left: 3%; bottom: 12%; }
-.orbit-6 { left: 1%; top: 34%; }
-.orbit-7 { left: 6%; top: 6%; }
-.orbit-8 { left: 18%; top: 20%; }
+/* Twelve family positions around the transformer reference */
+.orbit-0 { left: 38%; top: 1%; }
+.orbit-1 { right: 8%; top: 4%; }
+.orbit-2 { right: 1%; top: 22%; }
+.orbit-3 { right: 2%; top: 44%; }
+.orbit-4 { right: 10%; bottom: 8%; }
+.orbit-5 { left: 42%; bottom: 1%; }
+.orbit-6 { left: 18%; bottom: 4%; }
+.orbit-7 { left: 2%; bottom: 14%; }
+.orbit-8 { left: 1%; top: 40%; }
+.orbit-9 { left: 3%; top: 18%; }
+.orbit-10 { left: 14%; top: 4%; }
+.orbit-11 { left: 22%; top: 28%; }
 
 .routes {
   position: absolute;
@@ -706,11 +709,22 @@ h2 {
 .card-top {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
 }
 
 .card-top > span {
   color: var(--primary);
   font-weight: 800;
+  flex-shrink: 0;
+}
+
+.card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  min-width: 0;
 }
 
 .card-top em {
@@ -719,6 +733,74 @@ h2 {
   letter-spacing: 0.08em;
   font-style: normal;
   color: var(--muted);
+}
+
+.tier-pill {
+  padding: 3px 7px;
+  border-radius: 999px;
+  font-weight: 800;
+  color: var(--ink) !important;
+}
+
+.tier-pill.tier-A {
+  background: color-mix(in srgb, var(--accent) 28%, var(--panel));
+  color: var(--primary) !important;
+}
+
+.tier-pill.tier-B {
+  background: color-mix(in srgb, var(--primary) 12%, var(--panel));
+}
+
+.tier-pill.tier-C {
+  background: color-mix(in srgb, var(--line) 70%, var(--panel));
+}
+
+.chip-complement {
+  background: color-mix(in srgb, var(--primary) 10%, var(--panel)) !important;
+}
+
+.tier-legend {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 28px;
+}
+
+.tier-legend-item {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.tier-legend-item b {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.tier-legend-item span {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.tier-legend-item small {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.theme-lab .tier-legend-item {
+  border-radius: 12px;
+}
+
+.theme-field .tier-legend-item {
+  clip-path: polygon(0 0, 96% 0, 100% 10%, 100% 100%, 0 100%);
 }
 
 .arch-card h3 {
@@ -1034,7 +1116,7 @@ input[type="range"] {
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 870px;
+  min-width: 960px;
   background: var(--panel);
 }
 
@@ -1597,6 +1679,11 @@ footer a {
     margin-bottom: 32px;
   }
 
+  .tier-legend {
+    grid-template-columns: 1fr;
+    margin-bottom: 20px;
+  }
+
   .filters {
     flex-wrap: nowrap;
     overflow-x: auto;
@@ -1687,8 +1774,18 @@ footer a {
     min-height: 74px;
   }
 
-  .orbit-8 {
-    display: none; /* avoid pile-up on the tightest widths */
+  /* Hide lower-tier orbits so the hero map stays legible */
+  .orbit-8,
+  .orbit-9,
+  .orbit-10,
+  .orbit-11 {
+    display: none;
+  }
+}
+
+@media (max-width: 1000px) and (min-width: 681px) {
+  .tier-legend {
+    grid-template-columns: 1fr;
   }
 }
 
